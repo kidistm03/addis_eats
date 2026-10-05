@@ -1,14 +1,27 @@
-import Link from "next/link";
+import menu from "@/data/menu.json";
+import CategoryBar from "./CategoryBar";
+import DishList from "./DishList";
 
-export default function CartPage() {
+const dishes = menu.data;
+const categories = ["All Dishes", ...new Set(dishes.map((d) => d.category))];
+
+export default async function MenuPage({ searchParams }) {
+  await new Promise((resolve) => setTimeout(resolve, 3600)); 
+  const { category = "All Dishes" } = await searchParams;
+}
+export default async function MenuPage({ searchParams }) {
+  const { category = "All Dishes" } = await searchParams;
+
+  const filtered =
+    category === "All Dishes"
+      ? dishes
+      : dishes.filter((d) => d.category === category);
+
   return (
-    <main style={{ padding: "40px" }}>
-      <h1>Cart</h1>
-      <p>Your selected dishes will show here.</p>
-
-      <p style={{ marginTop: "20px" }}>
-        <Link href="/">← Back to Home</Link>
-      </p>
-    </main>
+    <div>
+      <h1 className="font-serif text-3xl mb-6">Our Menu</h1>
+      <CategoryBar categories={categories} active={category} />
+      <DishList dishes={filtered} />
+    </div>
   );
 }
