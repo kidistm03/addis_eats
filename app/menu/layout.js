@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import CategorySidebar from "./CategorySidebar";
+import CategoryBar from "./CategoryBar";
 
 export default function MenuLayout({ children }) {
   return (
